@@ -1,7 +1,10 @@
 @extends('base')
 
 @section('content')
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="branding">
+        <img src="https://play-lh.googleusercontent.com/ZU9cSsyIJZo6Oy7HTHiEPwZg0m2Crep-d5ZrfajqtsH-qgUXSqKpNA2FpPDTn-7qA5Q" alt="Logo">
+    </div>
     <a class="navbar-brand" href="#">EmailApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -12,50 +15,53 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
       </ul>
-
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
 
       <ul class="navbar-nav">
         @auth
 
         <li class="nav-item ml-5">
             <span class="navbar-text text-light mr-3">
-              Welcome, {{ auth()->user()->name }}
+              User: {{ auth()->user()->name }}
             </span>
           </li>
 
-        <li class="nav-item">
-          <a class="nav-link text-light" href="{{ route('logout') }}"
-             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-             Logout
-          </a>
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-          </form>
+          <li class="nav-item">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <button class="nav-link text-light" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="background-color: rgba(128, 128, 128, 0.7);">
+                Logout
+            </button>
         </li>
         @endauth
       </ul>
     </div>
   </nav>
+
+    <div class="content">
+        <p>Contents Here:
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia, culpa. Quibusdam dicta assumenda alias nam reprehenderit tempore nisi pariatur. Iure nesciunt placeat numquam ab accusantium quae vel accusamus exercitationem autem.</p>
+    </div>
 @endsection
+
+<style>
+    .navbar {
+            background-color: #0066b2;
+        }
+
+        .branding {
+            margin-right: 10px;
+        }
+
+        .branding img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .navbar-brand {
+            margin-left: 0;
+        }
+</style>

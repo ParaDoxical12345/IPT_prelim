@@ -24,15 +24,30 @@ class AuthController extends Controller
             'password' => ['required']
         ]);
 
-        if(auth()->attempt($credentials)) {
-            $request->session()->regenerate();
+        $user = User::where('email', $request->email)->first();
 
-            return redirect()->intended('dashboard');
+        if(!$user || $user->email_verified_at == null){
+            return redirect('/')->with('error', 'Sorry your email is not verified yet or does not exist!');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.'
-        ])->onlyInput('email');
+        $login = auth()->attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+        // if(auth()->attempt($credentials)) {
+        //     $request->session()->regenerate();
+
+        //     return redirect()->intended('dashboard');
+        // }
+
+        // return back()->withErrors([
+        //     'email' => 'The provided credentials do not match our records.'
+        // ])->onlyInput('email');
+
+        if(!$login){
+            return back()->with('error', 'Invalid credentials');
+        }
+        return redirect('/dashboard');
     }
 
     public function register(Request $request) {
